@@ -199,7 +199,7 @@ def edit():
 
 
 @insta485.app.route('/accounts/password/', methods=['GET'])
-def password_user():
+def password():
     """Password."""
     if 'logname' not in flask.session:
         return flask.redirect(flask.url_for('login'))
@@ -258,24 +258,25 @@ def download_file(filename):
 @insta485.app.route('/users/<user_url_slug>/', methods=['GET'])
 def users(user_url_slug):
     """Users."""
+    context = {}
     print(flask.session)
     if 'logname' not in flask.session:
         return flask.redirect(flask.url_for("login"))
-    # connection = insta485.model.get_db()
-    cus = insta485.model.get_db().execute(
+    connection = insta485.model.get_db()
+    cus = connection.execute(
         "SELECT username "
         "FROM users "
         "WHERE username = ? ",
         (user_url_slug,)
     )
-    # users_sql = cus.fetchall()
-    if not cus.fetchall():
+    users_sql = cus.fetchall()
+    if not users_sql:
         flask.abort(404)
 
     logname = flask.session['logname']
 
     # Check if the logged-in user is following this user
-    cursor = insta485.model.get_db().execute(
+    cursor = connection.execute(
         "SELECT username1, username2 "
         "FROM following "
         "WHERE username1 = ? AND username2 = ?",
@@ -289,7 +290,7 @@ def users(user_url_slug):
     number_of_followers = 0
     posts = []
 
-    curr = insta485.model.get_db().execute(
+    curr = connection.execute(
             "SELECT postid, filename "
             "FROM posts "
             "WHERE owner = ?",
@@ -298,7 +299,7 @@ def users(user_url_slug):
     posts = curr.fetchall()
     number_posts = len(posts)
 
-    fol = insta485.model.get_db().execute(
+    fol = connection.execute(
             "SELECT COUNT(username1) AS num_followers "
             "FROM following "
             "WHERE username2 = ?",
@@ -306,7 +307,7 @@ def users(user_url_slug):
         )
     number_of_followers = fol.fetchone()['num_followers']
 
-    follow = insta485.model.get_db().execute(
+    follow = connection.execute(
         "SELECT COUNT(username2) AS num_following "
         "FROM following "
         "WHERE username1 = ?",
@@ -315,7 +316,7 @@ def users(user_url_slug):
 
     number_of_following = follow.fetchone()['num_following']
 
-    name = insta485.model.get_db().execute(
+    name = connection.execute(
         "SELECT fullname "
         "FROM users WHERE username = ?",
         (user_url_slug,)
@@ -385,7 +386,7 @@ def followers(user_url_slug):
 
 
 @insta485.app.route('/users/<user_url_slug>/following/', methods=['GET'])
-def following_user(user_url_slug):
+def following(user_url_slug):
     """Follow."""
     if 'logname' not in flask.session:
         return flask.redirect(flask.url_for('login'))
@@ -565,7 +566,6 @@ def show_comments():
 
     if not target:
         target = flask.url_for('show_index')
-    return_value = None
 
     if operation == 'create':
         if not text:
@@ -575,9 +575,9 @@ def show_comments():
                 "VALUES (?, ?, ?) ",
                 (logname, postid, text,)
             )
-        return_value = flask.redirect(target)
+        return flask.redirect(target)
 
-    elif operation == 'delete':
+    if operation == 'delete':
         cur = connection.execute(
             "SELECT * FROM comments WHERE commentid = ?",
             (commentid,)
@@ -586,11 +586,9 @@ def show_comments():
         if comment_owner and comment_owner['owner'] != logname:
             flask.abort(403)
             # User owns the comment, proceed with deletion
-        else:
-            connection.execute(
-                "DELETE FROM comments WHERE commentid = ?", (commentid,))
-            return flask.redirect(target)
-    return return_value
+        connection.execute(
+            "DELETE FROM comments WHERE commentid = ?", (commentid,))
+        return flask.redirect(target)
 
 
 @insta485.app.route('/posts/', methods=['POST'])
@@ -659,8 +657,6 @@ def show_posts():
         )
 
         return flask.redirect(target)
-    return_valeu = None
-    return return_valeu
 
 
 @insta485.app.route('/following/', methods=['POST'])
@@ -725,6 +721,7 @@ def accounts_post():
     connection = insta485.model.get_db()
     operation = flask.request.form['operation']
     target = flask.request.args.get('target', '/')
+
     if operation == 'login':
         username = flask.request.form['username']
         password_i = flask.request.form['password']
@@ -744,7 +741,7 @@ def accounts_post():
         flask.session['fullname'] = database_user['fullname']
         return flask.redirect(target)
 
-    if operation == 'create':
+    elif operation == 'create':
         username = flask.request.form['username']
         password_i = flask.request.form['password']
         fullname = flask.request.form['fullname']
@@ -783,7 +780,7 @@ def accounts_post():
         flask.session['fullname'] = fullname
         return flask.redirect(target)
 
-    if operation == 'delete':
+    elif operation == 'delete':
         if 'logname' not in flask.session:
             flask.abort(403)
         logname_delete = flask.session['logname']
@@ -822,7 +819,7 @@ def accounts_post():
         flask.session.clear()
         return flask.redirect(target)
 
-    if operation == 'edit_account':
+    elif operation == 'edit_account':
         if 'logname' not in flask.session:
             flask.abort(403)
         user = flask.session['logname']
@@ -865,7 +862,7 @@ def accounts_post():
         flask.session["fullname"] = fullname
         return flask.redirect(target)
 
-    if operation == 'update_password':
+    elif operation == 'update_password':
         if 'logname' not in flask.session:
             flask.abort(403)
         logname = flask.session['logname']
@@ -900,8 +897,6 @@ def accounts_post():
             (hashed_new_password, logname)
         )
         return flask.redirect(target)
-    return_value = None
-    return return_value
 
 
 @insta485.app.route('/uploads/<filename>')

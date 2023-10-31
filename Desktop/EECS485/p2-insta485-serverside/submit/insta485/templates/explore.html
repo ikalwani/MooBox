@@ -45,7 +45,7 @@
       <div class="container">
         <div class="div">
           <div class="images">
-            <a href="/"> <br> Home</a>
+           <a href="/"> <br> Home</a>
           </div>
           <ul>
             <li>
@@ -62,23 +62,31 @@
         </div>
         {% endblock main%} 
         {% block content %}
-        <h2>{{ name }}</h2>
+        <div>
+            <h1>Discover People</h1>
+        </div>
 
-   <img src="/uploads/{{ filename }}" alt="" /></a>
-
-        <form action="/accounts/?target=" method="post" enctype="multipart/form-data">
-            <p1>Photo  </p1><input type="file" name="file" accept="image/*"/>
-            <p1>Name  </p1><input type="text" name="fullname" value="{{fullname}}" required/>
-            <p1>Email  </p1><input type="text" name="email" value="{{email}}" required/>
-            <input type="submit" name="update" value="submit"/>
-            <input type="hidden" name="operation" value="edit_account"/>
+        <div class="user-list">
+      {% for user in users_not_followed %}
+      <div class="user-item">
+        <img src="/uploads/{{ user.filename }}" alt="">
+        <a href="/users/{{ user.username }}/">{{ user.username }}</a>
+        <form action="/following/?target=/explore/" method="post" enctype="multipart/form-data">
+            <input type="submit" name="follow" value="follow"/>
+  <input type="hidden" name="username" value="{{ user.username }}"/>
+  <input type="hidden" name="operation" value="follow"/>
         </form>
+      </div>
+      {% endfor %}
+    </div>
 
-         <!-- Link to change password -->
-        <a href="/accounts/password/">Change Password</a>
-        
-        <!-- Link to delete account -->
-        <a href="/accounts/delete/">Delete Account</a>
+    
+
+
+
+
+
+
         {% endblock %}
       </div>
   </body>

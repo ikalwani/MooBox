@@ -1,0 +1,101 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+# Separating this script into three functions- start_server, stop_server and status_server
+
+start_server() {
+    # exit 1 if a manager or worker is already running
+    # pgrep used for searching processes based on their names 
+    # look for any process whose command line includes "mapreduce-manager"
+    # &> /dev/null - discard whatever output there is because dont care about it 
+    if pgrep -f mapreduce-manager &> /dev/null; then
+    # print out message and exit 1
+    echo "Error: mapreduce-manager is already running"
+    exit 1
+
+    elif pgrep -f mapreduce-worker &> /dev/null; then
+    # print out message and exit 1
+    echo "Error: mapreduce-worker is already running"
+    exit 1
+    fi
+
+    mkdir -p var/log
+    rm -f var/log/manager.log var/log/worker-6002.log var/log/worker-6001.log
+    mapreduce-manager --host localhost --port 6000 --logfile var/log/manager.log &
+    sleep 2  # give the Manager time to start
+    mapreduce-worker --host localhost --port 6001 --manager-host localhost --manager-port 6000 --logfile var/log/worker-6001.log &
+    mapreduce-worker --host localhost --port 6002 --manager-host localhost --manager-port 6000 --logfile var/log/worker-6002.log &
+    echo "starting mapreduce ..."
+}
+
+
+stop_server() {
+    echo "stopping mapreduce ..."
+    mapreduce-submit --shutdown --host localhost --port 6000
+    sleep 2  # give the Manager time to receive signal and send to Workers
+    if pgrep -f mapreduce-manager &> /dev/null; then
+    echo "killing mapreduce manager ..."
+    pkill -f mapreduce-manager || true
+    fi
+    if pgrep -f mapreduce-worker &> /dev/null; then
+    echo "killing mapreduce worker ..."
+    pkill -f mapreduce-worker || true
+    fi
+}
+
+status_server() {
+    # if both manager and workers are running
+    if pgrep -f mapreduce-manager &> /dev/null && pgrep -f mapreduce-worker &> /dev/null; then
+        echo "manager running"
+        echo "workers running"
+        exit 0
+    # if only manager is running 
+    elif pgrep -f mapreduce-manager &> /dev/null; then
+        echo "manager running"
+        echo "workers not running"
+        exit 1
+    # if only workers are running
+    elif pgrep -f mapreduce-worker &> /dev/null; then
+        echo "Manager not running"
+        echo "Workers running"
+        exit 1 
+    # if nobody is running
+    else
+        echo "manager not running"
+        echo "workers not running"
+        exit 1
+    fi
+}
+
+# parse arguments 
+main() {
+  if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <start|stop|status|restart>"
+    exit 1
+  fi
+
+  # check value of first command line argument 
+  case "$1" in
+    "start")
+      start_server
+      ;;
+    "stop")
+      stop_server
+      ;;
+    "restart")
+    # ignoring a failed stop command and running start after regardless
+      stop_server || true
+      start_server
+      ;;
+    "status")
+      status_server
+      ;;
+    *)
+      echo "Usage: $0 <start|stop|status|restart>"
+      exit 1
+      ;;
+  esac
+}
+
+# execute main function with all the arguments passed 
+main "$@"

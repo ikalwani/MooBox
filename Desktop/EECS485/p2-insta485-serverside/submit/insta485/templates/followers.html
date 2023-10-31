@@ -62,23 +62,33 @@
         </div>
         {% endblock main%} 
         {% block content %}
-        <h2>{{ name }}</h2>
 
-   <img src="/uploads/{{ filename }}" alt="" /></a>
+        <h1>Followers{{ user_url_slug }}</h1>
 
-        <form action="/accounts/?target=" method="post" enctype="multipart/form-data">
-            <p1>Photo  </p1><input type="file" name="file" accept="image/*"/>
-            <p1>Name  </p1><input type="text" name="fullname" value="{{fullname}}" required/>
-            <p1>Email  </p1><input type="text" name="email" value="{{email}}" required/>
-            <input type="submit" name="update" value="submit"/>
-            <input type="hidden" name="operation" value="edit_account"/>
-        </form>
-
-         <!-- Link to change password -->
-        <a href="/accounts/password/">Change Password</a>
+  <ul>
+    {% for follower in follower_info %}
+      <li>
+        <img src= "/uploads/{{follower.filename}}" alt="" />
+        <a href="/users/{{ follower.username }}/">{{ follower.username }}</a>
+        {% if follower.relationship == 'following' %}
+        <p>following</p>
+          <form action="/following/?target=/users/" method="post" enctype="multipart/form-data">
+            <input type="submit" name="unfollow" value="Unfollow">
+            <input type="hidden" name="username" value="{{ follower.username }}">
+            <input type="hidden" name="operation" value="unfollow">
+          </form>
+        {% elif follower.relationship == 'not following' %}
+        <p>not following</p> 
         
-        <!-- Link to delete account -->
-        <a href="/accounts/delete/">Delete Account</a>
+          <form action="/following/?target=/users/" method="post" enctype="multipart/form-data">
+            <input type="submit" name="follow" value="Follow">
+            <input type="hidden" name="username" value="{{ follower.username }}">
+            <input type="hidden" name="operation" value="follow">
+          </form>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
         {% endblock %}
       </div>
   </body>
