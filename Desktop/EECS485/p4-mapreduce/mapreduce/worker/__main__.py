@@ -5,6 +5,7 @@ import json
 import time
 import click
 import mapreduce.utils
+import threading
 
 
 # Configure logging
@@ -23,6 +24,10 @@ class Worker:
             "manager_host=%s manager_port=%s",
             manager_host, manager_port,
         )
+        
+        # message_thread = threading.Thread(target=self.handle_manager_messages)
+        # message_thread.daemon = True
+        # message_thread.start()
 
         # This is a fake message to demonstrate pretty printing with logging
         message_dict = {
