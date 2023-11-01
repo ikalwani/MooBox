@@ -5,7 +5,11 @@ import logging
 import json
 import time
 import click
+import threading 
 import mapreduce.utils
+import socket
+import sys 
+from queue import Queue
 
 
 # Configure logging
@@ -17,7 +21,15 @@ class Manager:
 
     def __init__(self, host, port):
         """Construct a Manager instance and start listening for messages."""
-
+        # need to initialize manager w host and port
+        # instance data -> making it accessble throughout class 
+        self.host = host 
+        self.port = port 
+        # store connected workers 
+        self.workers = []
+        # handle incoming messages 
+        self.message_queue = Queue()
+        
         LOGGER.info(
             "Starting manager host=%s port=%s pwd=%s",
             host, port, os.getcwd(),
