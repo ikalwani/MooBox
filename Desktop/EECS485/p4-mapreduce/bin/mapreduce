@@ -31,7 +31,7 @@ start_server() {
 
 stop_server() {
     echo "stopping mapreduce ..."
-    mapreduce-submit --shutdown --host localhost --port 6000
+    mapreduce-submit --shutdown --host localhost --port 6000 || true
     sleep 2  # give the Manager time to receive signal and send to Workers
     if pgrep -f mapreduce-manager &> /dev/null; then
     echo "killing mapreduce manager ..."
@@ -80,11 +80,11 @@ main() {
       start_server
       ;;
     "stop")
-      stop_server
+      stop_server 
       ;;
     "restart")
     # ignoring a failed stop command and running start after regardless
-      stop_server || true
+      stop_server 
       start_server
       ;;
     "status")
