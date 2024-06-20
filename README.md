@@ -1,70 +1,84 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# MooBox: Productivity with a Moo-tivational Twist
 
-## Available Scripts
+MooBox is a productivity app that combines task management tools with a delightful cow-themed experience. Designed to make organization and focus enjoyable, MooBox is perfect for students, professionals, and anyone looking to boost their productivity with a side of fun.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+1. **Feed Page**
+   - Displays motivational posts with the option to like them.
+   - Posts are displayed in a grid layout with three posts per row.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Quizzes Page**
+   - Includes multiple-choice quizzes to test your knowledge.
+   - Submit your answers and see the number of correct and incorrect responses.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Cow Videos Page**
+   - Shows a collection of fun and cute cow videos.
+   - Videos are embedded directly from YouTube.
 
-### `npm test`
+4. **Pomodoro Timer**
+   - A productivity timer based on the Pomodoro Technique.
+   - Helps you manage work and break intervals to increase productivity.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. **To-Do Task Maker**
+   - Allows you to add, edit, and delete tasks.
+   - Includes task urgency levels and options to mark tasks as complete.
+  
+## Technologies Used
 
-### `npm run build`
+- React: A JavaScript library for building user interfaces.
+- Tailwind CSS: A utility-first CSS framework for rapid UI development.
+- React Icons: A popular library for adding icons to React applications.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Make sure you have the following installed:
 
-### `npm run eject`
+- Node.js (v12.x or later)
+- npm (v6.x or later)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Installation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/moo-tivation.git
+   cd moo-tivation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Install dependency:**
+   ```sh
+   npm install
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Running the App
 
-## Learn More
+1. **CStart the development server:**
+   ```sh
+   npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Open your browser and navigate to http://localhost:3000 to see the app in action.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Components
 
-### Code Splitting
+**FeedPage:**
+Displays motivational posts in a grid layout with the option to like posts.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**QuizzesPage:**
+Presents multiple-choice quizzes and provides functionality to submit answers and view results.
 
-### Analyzing the Bundle Size
+**CowVideosPage:**
+Shows a list of embedded YouTube cow videos for entertainment.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**PomodoroTimer:**
+A productivity timer that helps manage work and break intervals based on the Pomodoro Technique.
 
-### Making a Progressive Web App
+**TodoListPage:**
+A task manager that allows users to add, edit, and delete tasks. It includes options to set task urgency levels and mark tasks as complete.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**HomePage:**
+Main page that includes navigation to switch between the feed, quizzes, cow videos, Pomodoro timer, and to-do list pages.
 
-### Advanced Configuration
+### Contact
+If you have any questions or suggestions, feel free to contact me at ikalwani@umich.edu.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
