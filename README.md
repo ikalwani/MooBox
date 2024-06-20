@@ -45,7 +45,7 @@ Make sure you have the following installed:
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/your-username/moo-tivation.git
-   cd moo-tivation
+   cd moobox
 
 2. **Install dependency:**
    ```sh
