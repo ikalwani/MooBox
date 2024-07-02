@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
-// Sample data for posts
 const postsData = [
   {
     id: 1,
@@ -29,7 +28,6 @@ const postsData = [
   },
 ];
 
-// Sample data for quizzes
 const quizzesData = [
   {
     id: 1,
@@ -47,19 +45,12 @@ const quizzesData = [
   },
 ];
 
-// Sample data for cow videos
 const cowVideosData = [
   {
     id: 1,
     type: "video",
     title: "Funny Cow Compilation",
     url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  },
-  {
-    id: 2,
-    type: "video",
-    title: "Cute Baby Cow Playing",
-    url: "https://www.youtube.com/embed/oHg5SJYRHA0",
   },
 ];
 

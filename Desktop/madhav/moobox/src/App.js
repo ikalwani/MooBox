@@ -179,7 +179,7 @@ return (
 };
 
 const MainSection = () => {
-  ///cow sound
+  //cow sound
   const playCowSound = () => {
     const audio = new Audio(cowSound);
     audio.play();
