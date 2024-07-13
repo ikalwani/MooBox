@@ -1,3 +1,0 @@
-example_input/crawl/0001.html
-example_input/crawl/0002.html
-example_input/crawl/0003.html
