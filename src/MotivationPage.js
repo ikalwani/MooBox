@@ -56,9 +56,36 @@ const postsData = [
       "Don't let procrastination be the udder destruction of your dreams! ⏳ #TimeManagement #Action",
     likes: 10,
   },
+  {
+    id: 10,
+    type: "post",
+    content:
+      "Moo-ve mountains with your determination and grit! 🏔️ #Perseverance #Strength",
+    likes: 23,
+  },
+  {
+    id: 11,
+    type: "post",
+    content:
+      "Steer clear of negativity and graze on positive thoughts! 🌈 #PositiveThinking #MindsetShift",
+    likes: 13,
+  },
+  {
+    id: 9,
+    type: "post",
+    content:
+      "Hay, don't forget to celebrate your small wins along the way! 🎉 #Progress #Celebration",
+    likes: 22,
+  },
+  {
+    id: 13,
+    type: "post",
+    content:
+      "Hoof it to your goals - they won't achieve themselves! 🏃‍♀️ #Motivation #GoalAchievement",
+    likes: 14,
+  },
 ];
 
-// Sample data for quizzes
 const quizzesData = [
   {
     id: 1,
@@ -115,9 +142,29 @@ const quizzesData = [
     options: ["6 months", "9 months", "12 months", "18 months"],
     answer: "9 months",
   },
+  {
+    id: 8,
+    type: "quiz",
+    question: "In which country are there more cows than people?",
+    options: ["India", "Brazil", "United States", "New Zealand"],
+    answer: "New Zealand",
+  },
+  {
+    id: 9,
+    type: "quiz",
+    question: "What is the average lifespan of a cow?",
+    options: ["5-10 years", "15-20 years", "25-30 years", "35-40 years"],
+    answer: "15-20 years",
+  },
+  {
+    id: 10,
+    type: "quiz",
+    question: "What percentage of the world's milk production comes from cows?",
+    options: ["50%", "70%", "85%", "95%"],
+    answer: "85%",
+  },
 ];
 
-// Sample data for cow videos
 const cowVideosData = [
   {
     id: 1,
@@ -128,8 +175,34 @@ const cowVideosData = [
   {
     id: 2,
     type: "video",
-    title: "Cute Baby Cow Playing",
-    url: "https://www.youtube.com/embed/oHg5SJYRHA0",
+    title: "Relaxing cow bells",
+    url: "https://www.youtube.com/embed/QhLMlA3Wb8w?si=kqG_IpK0dlGdln9s",
+  },
+  {
+    id: 3,
+    type: "video",
+    title: "Top 25 Facts about Cows",
+    url: "https://www.youtube.com/embed/aMlPAmVVjDQ?si=5TtYG2iKwuHohxgw",
+  },
+
+  {
+    id: 4,
+    type: "video",
+    title: "Happy cows jumping in a Field",
+    url: "https://www.youtube.com/embed/h7k6P12gfic?si=qcvGjG5T-ZAl5E18",
+  },
+
+  {
+    id: 5,
+    type: "video",
+    title: "Types of Cows",
+    url: "https://www.youtube.com/embed/6I31AC97Odw?si=dcLsT6XwSZC3OJBt",
+  },
+  {
+    id: 6,
+    type: "video",
+    title: "How to Milk a Cow",
+    url: "https://www.youtube.com/embed/ZHvFz2mRDCc?si=mAxSvtCzjR1nQ-M3",
   },
 ];
 
@@ -198,7 +271,7 @@ const QuizzesPage = ({ quizzes }) => {
           You got {correctCount} out of {quizzes.length} correct!
         </p>
         <img
-          src={cow} 
+          src={cow}
           alt="Cow Image"
           className="mt-4"
           style={{ maxWidth: "30%", height: "auto" }}
@@ -270,8 +343,6 @@ const QuizzesPage = ({ quizzes }) => {
     </div>
   );
 };
-
-
 
 const CowVideosPage = ({ videos }) => (
   <div className="grid grid-cols-2 gap-4 container mx-auto my-8 pb-7">
