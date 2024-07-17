@@ -12,6 +12,7 @@ import fm from "./images/fm.webp";
 import PomodoroPage from "./PomodoroPage.js";
 import TodoListPage from "./TodoListPage.js";
 import MotivationPage from "./MotivationPage.js";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const LoginPage = () => {
   //store input
@@ -179,7 +180,7 @@ return (
 };
 
 const MainSection = () => {
-  ///cow sound
+  //cow sound
   const playCowSound = () => {
     const audio = new Audio(cowSound);
     audio.play();
